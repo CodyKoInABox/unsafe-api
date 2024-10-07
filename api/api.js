@@ -1,6 +1,9 @@
 let express = require('express')
 let app = express();
+var cors = require('cors')
 const port = 8080;
+
+app.use(cors())
 
 const mysql = require('mysql');
 
@@ -15,7 +18,7 @@ let connection = mysql.createConnection({
   });
 
 
-app.get('signUp/:username/:password', (req, res) => {
+app.get('/signUp/:username/:password', (req, res) => {
 
     let username = req.params.username
     let password = req.params.password
@@ -24,7 +27,6 @@ app.get('signUp/:username/:password', (req, res) => {
 
     connection.query(`INSERT INTO users (username, password) VALUES ("${username}", "${password}")`, function (error, results, field){
 
-        console.log(results)
 
         if(error){
 
@@ -32,6 +34,7 @@ app.get('signUp/:username/:password', (req, res) => {
         }
         else{
 
+            console.log(results)
             res.send(200)
         }
     })
@@ -39,29 +42,28 @@ app.get('signUp/:username/:password', (req, res) => {
 })
 
 
-app.get('login/:username/:password', (req, res) => {
+app.get('/login/:username/:password', (req, res) => {
 
     let username = req.params.username
     let password = req.params.password
 
     connection.connect();
 
-    connection.query(`SELECT * FROM users WHERE username = ${username}`, function (error, results, field){
+    connection.query(`SELECT * FROM users WHERE username = "${username}"`, function (error, results, field){
         
-        console.log(results)
+        if(error){
 
-        if(results[0].password == password){
+            console.log(error)
+            res.send(400)
+        }
+        else if(results[0].password == password){
 
-            // login successful
-
+            console.log(results)
             res.send(200)
-
         }
         else{
 
-            // login not successful
-
-            res.send(400)
+            res.send(400) 
         }
     });
 
