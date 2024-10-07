@@ -104,6 +104,32 @@ function createNewSession() {
     });
 }
 
+app.get('/validate-session/:token', (req, res) => {
+
+    let token = req.params.token;
+
+    connection.query(`SELECT * FROM sessions WHERE token = "${token}"`, function (error, results, field) {
+
+        if (error) {
+
+            console.error(error);
+            return res.status(500).json({ error: "Database error", details: error.sqlMessage });
+            
+        }
+
+        // If token is found in the database
+        if (results.length > 0) {
+
+            return res.status(200).json({ valid: true });
+
+        } else {
+
+            return res.status(400).json({ valid: false, error: "Invalid or expired token" });
+
+        }
+    });
+});
+
 
 // ---------------------------- //
 // CODE IMPORTED FROM TANG LINK //

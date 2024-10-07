@@ -1,14 +1,34 @@
 
+// Unsafe login check
+document.addEventListener('DOMContentLoaded', function() {
 
+    // Check if the session token exists in localStorage
+    const sessionToken = localStorage.getItem('session');
 
-
-
-
-
-
-
-
-
+    if (!sessionToken) {
+        // If no token exists, redirect back to the login page
+        window.location.href = 'login.html';
+        
+    } else {
+        // Validate the token by making a request to the backend
+        fetch(`https://unsafe-api.onrender.com/validate-session/${sessionToken}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid) {
+                    console.log('Session is valid');
+                } else {
+                    console.error('Invalid session');
+                    // Redirect to login page if the token is invalid
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error validating session:', error);
+                // Redirect to login page on error
+                window.location.href = 'login.html';
+            });
+    }
+});
 
 
 // Simple console functionality to log messages
