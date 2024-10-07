@@ -53,6 +53,9 @@ function loginUser(username, password) {
                     localStorage.setItem("session", token);
                     console.log(data.session)
 
+                    // Redirect to the dashboard
+                    window.location.href = './dashboard.html';
+
                 } else if (data.error) {
 
                     console.log('LOGIN ERROR: ', data.error);
