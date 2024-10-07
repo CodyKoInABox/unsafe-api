@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!sessionToken) {
         // If no token exists, redirect back to the login page
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         
     } else {
         // Validate the token by making a request to the backend
@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Invalid session');
 
                     // Redirect to login page if the token is invalid
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
 
                 }
             })
             .catch(error => {
                 console.error('Error validating session:', error);
                 // Redirect to login page on error
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             });
     }
 });
