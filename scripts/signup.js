@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
+    const resultDiv = document.getElementById('signupResult');
 
     // toggle password
     togglePassword.addEventListener('click', function() {
@@ -31,25 +32,39 @@ function signupUser(username, password) {
     console.log('Sign-up - Password:', password);
 
     fetch(`http://localhost:8080/signup/${username}/${password}`)
-    .then(response => {
+            .then(response => response.json())
+            .then(data => {
 
-        if (response.status == 200) {
+                if (data) {
 
-            console.log('SIGNUP OK');
+                    console.log('Signup Response Data:', data);
+                    
+                }
 
-        } else if (response.status == 400) {
+                if (data.message) {
 
-            console.log('SIGNUP ERROR');
+                    console.log('SIGNUP OK: ', data.message);
 
-        } else {
+                    resultDiv.textContent = 'Sign-up successful!';
+                    resultDiv.style.color = '#0f0';
 
-            console.log('SIGNUP Unexpected error: ', response.status);
-            
-        }
-    })
-    .catch(error => {
-        console.error('LOGIN Fetch error:', error);
-    });
+                } else if (data.error) {
+
+                    console.log('SIGNUP ERROR: ', data.error);
+
+                    resultDiv.textContent = `Error: ${data.error}`;
+                    resultDiv.style.color = 'red';
+
+                }
+            })
+            .catch(error => {
+
+                console.error('SIGNUP Fetch error:', error);
+
+                resultDiv.textContent = `Error: ${error.error}`;
+                resultDiv.style.color = 'red';
+
+            })
 }
 
 

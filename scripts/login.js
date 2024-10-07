@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
+    const resultDiv = document.getElementById('loginResult');
 
     // toggle password
     togglePassword.addEventListener('click', function() {
@@ -20,8 +21,9 @@ loginForm.addEventListener('submit', function(event) {
     const username = document.getElementById('username').value;
     const password = passwordInput.value;
 
-
     loginUser(username, password);
+
+
 });
 
 // Function to handle login
@@ -31,25 +33,38 @@ function loginUser(username, password) {
     console.log('Login - Password:', password);
 
     fetch(`http://localhost:8080/login/${username}/${password}`)
-    .then(response => {
+            .then(response => response.json())
+            .then(data => {
 
-        if (response.status == 200) {
+                if (data) {
 
-            console.log('LOGIN OK');
+                    console.log('Login Response Data:', data); 
+                }
 
-        } else if (response.status == 400) {
+                if (data.message) {
 
-            console.log('LOGIN ERROR');
+                    console.log('LOGIN OK: ', data.message);
 
-        } else {
+                    resultDiv.textContent = 'Login successful!';
+                    resultDiv.style.color = '#0f0';
 
-            console.log('LOGIN Unexpected error: ', response.status);
-            
-        }
-    })
-    .catch(error => {
-        console.error('LOGIN Fetch error:', error);
-    });
+                } else if (data.error) {
+
+                    console.log('LOGIN ERROR: ', data.error);
+
+                    resultDiv.textContent = `Error: ${data.error}`;
+                    resultDiv.style.color = 'red';
+
+                }
+            })
+            .catch(error => {
+
+                console.error('LOGIN Fetch error:', error);
+
+                resultDiv.textContent = `Error: ${error.error}`;
+                resultDiv.style.color = 'red';
+
+            });
 }
 
 

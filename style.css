@@ -183,7 +183,6 @@ input[type="submit"]:active
 .inputBox {
     position: relative;
 }
-
 .eye-icon {
     position: absolute;
     right: 10px;
@@ -197,5 +196,9 @@ input[type="submit"]:active
 .eye-icon {
     filter: invert(41%) sepia(91%) saturate(533%) hue-rotate(93deg) brightness(122%) contrast(116%);
     cursor: pointer;
-  }
-  
+}
+.result-message {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}

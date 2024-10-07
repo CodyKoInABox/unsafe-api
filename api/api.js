@@ -23,21 +23,27 @@ app.get('/signup/:username/:password', (req, res) => {
     let username = req.params.username
     let password = req.params.password
 
-    connection.connect();
-
     connection.query(`INSERT INTO users (username, password) VALUES ("${username}", "${password}")`, function (error, results, field){
 
+        if (error) {
 
-        if(error){
+            // check if the error is duplicate username
+            if (error.code === 'ER_DUP_ENTRY') {
 
-            res.send(400)
+                return res.status(400).json({ error: "Username already in use. Please choose a new username." });
+
+            } else {
+
+                console.error(error);
+                return res.status(500).json({ error: "ERROR", details: error.sqlMessage });
+                
+            }
+        } else {
+
+            return res.status(200).json({ message: "Sign-Up successful", userId: results.insertId });
         }
-        else{
 
-            console.log(results)
-            res.send(200)
-        }
-    })
+    });
 
 })
 
@@ -47,24 +53,32 @@ app.get('/login/:username/:password', (req, res) => {
     let username = req.params.username
     let password = req.params.password
 
-    connection.connect();
-
     connection.query(`SELECT * FROM users WHERE username = "${username}"`, function (error, results, field){
         
-        if(error){
+        if (error) {
+            
+            console.error(error);
+            return res.status(400).json({ error: "Error fetching user", details: error.sqlMessage });
 
-            console.log(error)
-            res.send(400)
-        }
-        else if(results[0].password == password){
+        } 
 
-            console.log(results)
-            res.send(200)
-        }
-        else{
+        // check if user exists
+        if (results.length === 0) {
 
-            res.send(400) 
+            return res.status(400).json({ error: "Invalid username or password" });
+
         }
+
+        // check if the password matches
+        if (results[0].password === password) {
+
+            return res.status(200).json({ message: "Login successful", user: results[0] });
+            
+        } else {
+
+            return res.status(400).json({ error: "Invalid username or password" });
+        }
+
     });
 
 })
