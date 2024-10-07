@@ -180,3 +180,22 @@ input[type="submit"]:active
     height: calc(20vw - 2px);
   }
 }
+.inputBox {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    transition: .1s;
+}
+.eye-icon {
+    filter: invert(41%) sepia(91%) saturate(533%) hue-rotate(93deg) brightness(122%) contrast(116%);
+    cursor: pointer;
+  }
+  
