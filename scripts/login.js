@@ -32,7 +32,7 @@ function loginUser(username, password) {
     console.log('Login - Username:', username);
     console.log('Login - Password:', password);
 
-    fetch(`http://localhost:8080/login/${username}/${password}`)
+    fetch(`https://unsafe-api.onrender.com/login/${username}/${password}`)
             .then(response => response.json())
             .then(data => {
 

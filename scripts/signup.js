@@ -31,7 +31,7 @@ function signupUser(username, password) {
     console.log('Sign-up - Username:', username);
     console.log('Sign-up - Password:', password);
 
-    fetch(`http://localhost:8080/signup/${username}/${password}`)
+    fetch(`https://unsafe-api.onrender.com/signup/${username}/${password}`)
             .then(response => response.json())
             .then(data => {
 
