@@ -54,7 +54,7 @@ function loginUser(username, password) {
                     console.log(data.session)
 
                     // Redirect to the dashboard
-                    window.location.href = './dashboard.html';
+                    window.location.href = './index.html';
 
                 } else if (data.error) {
 
