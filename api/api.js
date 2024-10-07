@@ -76,9 +76,9 @@ app.get('/login/:username/:password', async (req, res) => {
 
 
             // this will create the token on the database
-            let token = await createNewSession()
+            let token = await createNewSession(username)
 
-            return res.status(200).json({ message: "Login successful", user: results[0], session: token});
+            return res.status(200).json({ message: "Login successful", user: results[0], session: token, username: username});
             
         } else {
 
@@ -89,12 +89,12 @@ app.get('/login/:username/:password', async (req, res) => {
 
 })
 
-function createNewSession() {
+function createNewSession(username) {
     return new Promise((resolve, reject) => {
         let token = randString(20, exampleSet);
 
         // Insert token into the sessions table
-        connection.query(`INSERT INTO sessions (token) VALUES ("${token}")`, function (error, results, field) {
+        connection.query(`INSERT INTO sessions (token, username) VALUES ("${token}", "${username}")`, function (error, results, field) {
             if (error) {
                 return reject(error); // Reject the promise if there's an error
             }
@@ -114,13 +114,13 @@ app.get('/validate-session/:token', (req, res) => {
 
             console.error(error);
             return res.status(500).json({ error: "Database error", details: error.sqlMessage });
-            
+
         }
 
         // If token is found in the database
         if (results.length > 0) {
 
-            return res.status(200).json({ valid: true });
+            return res.status(200).json({ valid: true, username: results[0].username });
 
         } else {
 

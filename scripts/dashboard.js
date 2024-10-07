@@ -15,11 +15,21 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.valid) {
+
+                    // save the username for that session
+                    const username = data.username
+
                     console.log('Session is valid');
+                    console.log(`Username: ${username}`)
+
+
                 } else {
+
                     console.error('Invalid session');
+
                     // Redirect to login page if the token is invalid
                     window.location.href = 'login.html';
+
                 }
             })
             .catch(error => {

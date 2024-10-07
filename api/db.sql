@@ -6,5 +6,6 @@ CREATE TABLE `users` (
 
 
 CREATE TABLE `sessions` (
-    `token` VARCHAR(255) NOT NULL PRIMARY KEY
+    `token` VARCHAR(255) NOT NULL PRIMARY KEY,
+    `username` VARCHAR(255)
 );
