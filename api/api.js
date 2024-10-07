@@ -48,12 +48,12 @@ app.get('/signup/:username/:password', (req, res) => {
 })
 
 
-app.get('/login/:username/:password', (req, res) => {
+app.get('/login/:username/:password', async (req, res) => {
 
     let username = req.params.username
     let password = req.params.password
 
-    connection.query(`SELECT * FROM users WHERE username = "${username}"`, function (error, results, field){
+    connection.query(`SELECT * FROM users WHERE username = "${username}"`, async function (error, results, field){
         
         if (error) {
             
@@ -76,7 +76,7 @@ app.get('/login/:username/:password', (req, res) => {
 
 
             // this will create the token on the database
-            let token = createNewSession()
+            let token = await createNewSession()
 
             return res.status(200).json({ message: "Login successful", user: results[0], session: token});
             

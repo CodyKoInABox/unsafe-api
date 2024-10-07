@@ -51,6 +51,7 @@ function loginUser(username, password) {
                     // save the token to local storage
                     let token = data.session
                     localStorage.setItem("session", token);
+                    console.log(data.session)
 
                 } else if (data.error) {
 
