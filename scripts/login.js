@@ -48,6 +48,10 @@ function loginUser(username, password) {
                     resultDiv.textContent = 'Login successful!';
                     resultDiv.style.color = '#0f0';
 
+                    // save the token to local storage
+                    let token = data.session
+                    localStorage.setItem("session", token);
+
                 } else if (data.error) {
 
                     console.log('LOGIN ERROR: ', data.error);

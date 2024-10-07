@@ -71,8 +71,14 @@ app.get('/login/:username/:password', (req, res) => {
 
         // check if the password matches
         if (results[0].password === password) {
+        
+            // if login is successful, create a random token that will be sent both to database and user, to do login validation
 
-            return res.status(200).json({ message: "Login successful", user: results[0] });
+
+            // this will create the token on the database
+            let token = createNewSession()
+
+            return res.status(200).json({ message: "Login successful", user: results[0], session: token});
             
         } else {
 
@@ -82,6 +88,44 @@ app.get('/login/:username/:password', (req, res) => {
     });
 
 })
+
+function createNewSession() {
+    return new Promise((resolve, reject) => {
+        let token = randString(20, exampleSet);
+
+        // Insert token into the sessions table
+        connection.query(`INSERT INTO sessions (token) VALUES ("${token}")`, function (error, results, field) {
+            if (error) {
+                return reject(error); // Reject the promise if there's an error
+            }
+
+            resolve(token); // Resolve with the generated token
+        });
+    });
+}
+
+
+// ---------------------------- //
+// CODE IMPORTED FROM TANG LINK //
+// ---------------------------- //
+
+let exampleSet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789"
+
+function randString(length, set) {
+
+    let output = ''
+
+    const setLength = set.length
+
+    for(let i = 0; i < length; i++){
+        output += set.charAt(Math.floor(Math.random()*setLength))
+    }
+
+    return output
+}
+
+// ---------------------------- //
+// ---------------------------- //
 
 app.listen(port, () => {
     
