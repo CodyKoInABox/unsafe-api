@@ -2,9 +2,12 @@
 
 html {
   min-height: 100%;
+  margin: 0px;
 }
 
 body {
+      min-height: 100%;
+  margin: 0px;
     overflow: hidden;
   box-sizing: border-box;
   height: 100%;
