@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+    
     const loginForm = document.getElementById('loginForm');
-
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
     const resultDiv = document.getElementById('loginResult');
+    const loadingIcon = document.getElementById('loadingIcon');
 
     // toggle password
     togglePassword.addEventListener('click', function() {
@@ -32,9 +33,19 @@ function loginUser(username, password) {
     console.log('Login - Username:', username);
     console.log('Login - Password:', password);
 
+    // loadingIcon.style.display = 'block'; // Show the loading icon
+
+        // Set a timeout to show the loading icon
+        const loadingTimeout = setTimeout(() => {
+            loadingIcon.style.display = 'block';
+        }, 3000); // 3 seconds
+
     fetch(`https://unsafe-api.onrender.com/login/${username}/${password}`)
             .then(response => response.json())
             .then(data => {
+
+                clearTimeout(loadingTimeout); // Clear the timeout
+                loadingIcon.style.display = 'none'; // Hide the loading icon
 
                 if (data) {
 
@@ -66,6 +77,9 @@ function loginUser(username, password) {
                 }
             })
             .catch(error => {
+
+                clearTimeout(loadingTimeout); // Clear the timeout
+                loadingIcon.style.display = 'none'; // Hide the loading icon
 
                 console.error('LOGIN Fetch error:', error);
 
