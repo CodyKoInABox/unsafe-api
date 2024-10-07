@@ -140,7 +140,7 @@ a::after {
     padding: 10px;
     border-top: 1px solid rgb(9, 185, 9);
     background-color: #00000040;
-    height: 120px; /* Set a height for the console */
+    height: 145px; /* Set a height for the console */
     width: 102%; /* Set width for console */
     bottom: 0; /* Position at the bottom of the screen */
     z-index: 1000;
