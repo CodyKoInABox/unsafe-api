@@ -18,7 +18,7 @@ let connection = mysql.createConnection({
   });
 
 
-app.get('/signUp/:username/:password', (req, res) => {
+app.get('/signup/:username/:password', (req, res) => {
 
     let username = req.params.username
     let password = req.params.password
