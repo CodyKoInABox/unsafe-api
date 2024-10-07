@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
     const resultDiv = document.getElementById('signupResult');
+    const loadingIcon = document.getElementById('loadingIcon');
 
     // toggle password
     togglePassword.addEventListener('click', function() {
@@ -31,9 +32,13 @@ function signupUser(username, password) {
     console.log('Sign-up - Username:', username);
     console.log('Sign-up - Password:', password);
 
+    loadingIcon.style.display = 'block'; // Show the loading icon
+
     fetch(`https://unsafe-api.onrender.com/signup/${username}/${password}`)
             .then(response => response.json())
             .then(data => {
+
+                loadingIcon.style.display = 'none'; // Hide the loading icon
 
                 if (data) {
 
@@ -58,6 +63,8 @@ function signupUser(username, password) {
                 }
             })
             .catch(error => {
+
+                loadingIcon.style.display = 'none'; // Hide the loading icon
 
                 console.error('SIGNUP Fetch error:', error);
 
