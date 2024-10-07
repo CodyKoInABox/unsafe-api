@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Session is valid');
                     console.log(`Username: ${username}`)
 
+                    // set the username text as the username on the frontend
+                    const usernameElement = document.getElementById('username');
+                    usernameElement.innerText = username;
 
                 } else {
 
@@ -38,6 +41,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.href = 'index.html';
             });
     }
+
+    // Logout button functionality
+    document.getElementById('logout-button').addEventListener('click', function() {
+
+        localStorage.clear(); // Clear all local storage data
+
+        window.location.href = 'index.html'; // Redirect to index page
+    });
+
 });
 
 

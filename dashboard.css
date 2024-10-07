@@ -167,3 +167,37 @@ a::after {
     z-index: 0; /* Ensure it is above the output console */
     opacity: 7.5%;
 }
+
+.user-info {
+    position: absolute;
+    top: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    color: rgba(128, 255, 128, 0.8);
+    font-family: 'Inconsolata', Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between username and button */
+}
+
+.user-info a {
+    color: rgba(128, 255, 128, 1);
+    text-shadow: 0 0 1px rgba(51, 255, 51, 1);
+}
+
+#username {
+    font-size: 1.25rem; /* Adjust this value for smaller size */
+    margin-right: 10px; /* Optional: add some space between username and button */
+}
+
+#logout-button {
+    background-color: transparent;
+    border: 1px solid rgba(128, 255, 128, 1);
+    color: rgba(128, 255, 128, 1);
+    padding: 5px 10px; /* Add some padding */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#logout-button:hover {
+    background-color: rgba(128, 255, 128, 0.3); /* Change background on hover */
+}
